@@ -5,6 +5,7 @@ from django.contrib import auth
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.decorators import login_required
 
 
 class SignUpView(FormView):
@@ -41,6 +42,7 @@ def login_view(request):
         return render(request, "users/login.html", {"form": form})
 
 
+@login_required(login_url="/users/login/")
 def log_out(request):
     logout(request)
     return redirect(reverse("core:home"))
